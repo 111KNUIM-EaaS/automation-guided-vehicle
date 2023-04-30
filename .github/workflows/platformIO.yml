@@ -16,9 +16,15 @@ jobs:
           fetch-depth: 0
 
       - name: Get commits between tags
+        continue-on-error: true
         run: |
-          TAG1=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1) | cut -d'-' -f1)
           TAG2=$(git describe --tags)
+          echo "[![Automation Guided Vehicle](https://img.shields.io/badge/Automation%20Guided%20Vehicle-%F0%9F%94%96${TAG2}-orange)](https://github.com/111KNUIM-EaaS/automation-guided-vehicle)" >> commit_msg.txt
+          echo "[![6.1.0](https://img.shields.io/badge/platform-espressif32%406.1.0-green)](https://github.com/platformio/platform-espressif32/releases/tag/v6.1.0)" >> commit_msg.txt
+          echo "[![ESP-IDF-v5.0.1](https://img.shields.io/badge/ESP--IDF-v5.0.1-blue)](https://docs.espressif.com/projects/esp-idf/en/v5.0.1/esp32/index.html)" >> commit_msg.txt
+          echo "![esp32doit](https://img.shields.io/badge/board-esp32doit--devkit--v1-lightgrey)" >> commit_msg.txt
+          echo "![arduino](https://img.shields.io/badge/framework-arduino-blue)" >> commit_msg.txt
+          TAG1=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1) | cut -d'-' -f1)
           COMMIT_RANGE="$TAG1..$TAG2"
           echo "🏷️commit version: ${COMMIT_RANGE}"
           if [ $(/usr/bin/git log ${COMMIT_RANGE} --grep="feat:" --pretty=format:"%s" --date=short | grep -c "feat:") -gt 0 ]; then
@@ -77,6 +83,6 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           body_path: commit_msg.txt
-          name: "3D Machine ${{ github.ref_name }}"
+          name: "Automation Guided Vehicle ${{ github.ref_name }}"
           files: .pio/build/OTA/firmware.bin
           token: ${{ secrets.TOKEN }}
