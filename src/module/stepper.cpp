@@ -4,8 +4,6 @@
 
 // include ESP-IDF libraries
 #include "esp_log.h"
-#include "freeRTOS/freertos.h"
-#include "freeRTOS/task.h"
 
 // include custom libraries
 #include "header.h"
