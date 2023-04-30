@@ -31,3 +31,5 @@ void loop() {
 ```
 
 ## Setup Release and Update Firmware
+
+![Automation Guided Vehicle OTA](https://github.com/111KNUIM-EaaS/automation-guided-vehicle/releases/download/v0.0.0/Automation.Guided.Vehicle.OTA.png)
