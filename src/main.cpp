@@ -10,6 +10,22 @@ uint64_t stepper_step = 0;
 
 extern uint8_t task_status;
 
+#define STEPPER_MODE_LENGTH 12
+stepper_mode_t stepper_mode[STEPPER_MODE_LENGTH] = {
+    STEPPER_FORWARD,
+    STEPPER_LEFT,
+    STEPPER_BACKWARD,
+    STEPPER_RIGHT,
+    STEPPER_FORWARD_LEFT,
+    STEPPER_BACKWARD_RIGHT,
+    STEPPER_LEFT,
+    STEPPER_FORWARD_RIGHT,
+    STEPPER_BACKWARD_LEFT,
+    STEPPER_RIGHT,
+    STEPPER_TURN_COUNTERCLOCKWISE,
+    STEPPER_TURN_CLOCKWISE,
+};
+
 void setup() {
     init_EaaS();
 
@@ -24,19 +40,9 @@ void loop() {
     }
 
     if(task_status == 1) {
-        if(stepper_step < 500) {
-            control_stepper(STEPPER_FORWARD, 4, &stepper_step);
+        control_stepper(stepper_mode[(int)stepper_step / 500], 4, &stepper_step);
 
-        } else if(stepper_step < 1000) {
-            control_stepper(STEPPER_LEFT, 4, &stepper_step);
-
-        } else if(stepper_step < 1500) {
-            control_stepper(STEPPER_BACKWARD, 4, &stepper_step);
-
-        } else if(stepper_step < 2000) {
-            control_stepper(STEPPER_RIGHT, 4, &stepper_step);
-
-        } else {
+        if(stepper_step > STEPPER_MODE_LENGTH * 500) {
             stepper_step = 0;
         }
     }
